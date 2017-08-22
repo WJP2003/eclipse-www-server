@@ -1,0 +1,12 @@
+document_root = server_root.."/docs"
+-- Where to search for docs to serve
+-- server_root is inside eclipse-www-server.lua
+
+bind = {["port"]=80,["addr"]="0.0.0.0"}
+-- What address and port to bind to
+
+hsts = false
+-- Enable/disable the HSTS HTTP header
+-- NOTE: YOU MUST USE A FRONTEND FOR
+-- SSL SUCH AS STUNNEL FOR THIS TO WORK.
+-- ECLIPSE HAS NO NATIVE SSL SUPPORT.
