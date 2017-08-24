@@ -8,11 +8,13 @@ if [[ $(whoami) == "root" ]]; then
 	echo "probably break the installation!" >> /dev/stderr
 	echo "Run this as a sudo user instead." >> /dev/stderr
 	exit 1
-else; if [[ $(sudo -v) != "" ]]; then
-	echo "ERROR: You must be an administrator user to run" >> /dev/stderr
-	echo "this installation script." >> /dev/stderr
-	exit 2
-fi;fi
+else 
+	if [[ $(sudo -v) != "" ]]; then
+		echo "ERROR: You must be an administrator user to run" >> /dev/stderr
+		echo "this installation script." >> /dev/stderr
+		exit 2
+	fi
+fi
 if [[ $(cut -d: -f1 /etc/passwd) | grep "_www") != "" ]]; then
 	echo "Looks like you already have a user" >> /dev/stderr
 	echo "named '_www' which is the default system" >> /dev/stderr
