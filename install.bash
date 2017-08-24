@@ -1,5 +1,5 @@
 #!/bin/bash
-$wwwuser = "_www"
+wwwuser="_www"
 
 if [[ $(whoami) == "root" ]]; then
 	echo "ERROR: Do not run this script as root" >> /dev/stderr
