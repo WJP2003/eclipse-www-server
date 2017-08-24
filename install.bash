@@ -23,9 +23,10 @@ if [[ $(cut -d: -f1 /etc/passwd | grep "_www") != "" ]]; then
 	echo "username used here." >> /dev/stderr
 	echo ""
 	echo "New username (to make it look system-y start "
-	read -r -p "with an underscore. New username: " wwwuser 
+	read -r -p -t 32768 "with an underscore.) New username: " wwwuser 
+	read -s -r -p -t 32768 "Press any key to continue..." -n 1
 fi
-sudo -s root <<'EOF'
+sudo -s -u root <<'EOF'
 	printf "Removing stock Lua 5.2..."
 	apt-get -yqq purge lua
 	echo "done"
@@ -57,7 +58,7 @@ sudo -s root <<'EOF'
 
 	printf "Switching to that user..."
 EOF
-sudo -s $wwwuser <<'EOF'
+sudo -s -u $wwwuser <<'EOF'
 	echo "done"
 
 	printf "Cloning git repo..."
@@ -73,7 +74,7 @@ sudo -s $wwwuser <<'EOF'
 
 	printf "Switching to root user..."
 EOF
-sudo -s root <<'EOF'
+sudo -s -u root <<'EOF'
 	echo "done"
 	
 	printf "Changing ownership of www server directory..."
@@ -82,7 +83,7 @@ sudo -s root <<'EOF'
 
 	printf "Switching back to www user..."
 EOF
-sudo -s $wwwuser <<'EOF'
+sudo -s -u $wwwuser <<'EOF'
 	echo "done"
 
 	printf "Making the web server script executable by only the www user..."
@@ -91,7 +92,7 @@ sudo -s $wwwuser <<'EOF'
 
 	printf "Switching back to root user..."
 EOF
-sudo -s root <<'EOF'
+sudo -s -u root <<'EOF'
 	echo "done"
 
 	printf "Creating terminal command 'eclipse-www-server'..."
