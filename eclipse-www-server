@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ `whoami` != 'root' ]; then
+	echo "Cannot run server-- are you root?"
+	echo "Attempting to elevate privileges using sudo..."
+	sudo "$0"
+fi
+
+$(which eclipse-www-server.lua); echo $! > /run/eclipse-www-server.pid 
+exit 0
