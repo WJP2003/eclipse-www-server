@@ -1,7 +1,0 @@
-[Unit]
-Description=An incredibly simple, Lua based web server with its own Lua CGI engine.
-
-[Service]
-ExecStart=/usr/local/bin/eclipse-www-server
-ExecStop=/usr/local/bin/eclipse-www-server.kill
-TimeoutStopSec=30
