@@ -23,8 +23,8 @@ if [[ $(cut -d: -f1 /etc/passwd | grep "_www") != "" ]]; then
 	echo "username used here." >> /dev/stderr
 	echo ""
 	echo "New username (to make it look system-y start "
-	read -r -p -t 32768 "with an underscore.) New username: " wwwuser 
-	read -s -r -p -t 32768 "Press any key to continue..." -n 1
+	read -r -p "with an underscore.) New username: " wwwuser 
+	read -s -r -p "Press any key to continue..." -n 1
 fi
 sudo -s -u root <<'EOF'
 	printf "Running 'apt-get update'..."
@@ -127,5 +127,5 @@ if [[ "$wwwuser" != "_www" ]]; then
 	echo "from $(cat '/home/$wwwuser/eclipse-www-server.lua' | grep 'server_root' -m 1)"
 	echo "to $(cat '/home/$wwwuser/eclipse-www-server.lua' | grep 'server_root' -m -1 | xargs sed -i 's/_www/$wwwuser/g')."
 fi
-read -s -r -p -t 32768 "Press any key to continue..." -n 1
+read -s -r -p "Press any key to continue..." -n 1
 exit 0
