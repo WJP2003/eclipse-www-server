@@ -106,7 +106,7 @@ sudo -sE -u $wwwuser <<'EOF'
 	echo "done"
 
 	printf "Making the web server script executable by only the www user..."
-	chmod 774 "/home/$wwwuser/eclipse-www-server.lua"
+	chmod 744 "/home/$wwwuser/eclipse-www-server.lua"
 	echo "done"
 
 	printf "Making the web server root directory locked down..."
