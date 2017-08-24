@@ -120,7 +120,7 @@ sudo -s -u root <<'EOF'
 	echo "done"
 EOF
 echo "Installation complete!"
-if [[ echo "$wwwuser" != "_www" ]]; then
+if [[ "$wwwuser" != "_www" ]]; then
 	echo "NOTE: Since there was a _www already,"
 	echo "you must change the 2nd line in"
 	echo "/home/$wwwuser/eclipse-www-server.lua"
