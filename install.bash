@@ -64,7 +64,8 @@ sudo -sE -u root <<'EOF'
 	echo "done"
 
 	printf "Installing LuaSocket..."
-	luarocks install luasocket
+	luarocks install luasocket | grep -o -m 1 "abc" | grep -o -m 1 "123"
+	# | grep -o -m 1 "abc" | grep -o -m 1 "123" hides the output
 	echo "done"
 
 	printf "Installing OpenSSL (for useradd password encryption)..."
