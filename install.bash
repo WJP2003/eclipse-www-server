@@ -1,7 +1,12 @@
 #!/bin/bash
-wwwuser="_www"
 
-if [[ $(whoami) == "root" ]]; then
+if [[ "$1" != "" ]]; then
+	wwwuser="$1"
+else
+	wwwuser="_www"
+fi
+
+if [[ $(id -un) == "root" ]]; then
 	echo "ERROR: Do not run this script as root" >> /dev/stderr
 	echo "or by using sudo! This will make files" >> /dev/stderr
 	echo "created root-only readable and will" >> /dev/stderr
@@ -21,10 +26,10 @@ if [[ $(cut -d: -f1 /etc/passwd | grep "_www") != "" ]]; then
 	echo "user for this installation. Either cancel the" >> /dev/stderr
 	echo "program (CTRL-C) and remove it OR change the" >> /dev/stderr
 	echo "username used here." >> /dev/stderr
-	echo ""
-	echo "New username (to make it look system-y start "
-	read -r -p "with an underscore.) New username: " wwwuser 
-	read -s -r -p "Press any key to continue..." -n 1
+	echo "For the latter, re run using..." >> /dev/stderr
+	echo "" >> /dev/stderr
+	echo "curl https://raw.githubusercontent.com/WJP2003/eclipse-www-server/master/install.bash | bash -s [username_here]" >> /dev/stderr
+	exit 3
 fi
 
 export wwwuser
@@ -70,13 +75,6 @@ sudo -sE -u root <<'EOF'
 	useradd -m -p $(echo "alpine" | openssl passwd -1 -stdin) "$wwwuser"
 	echo "done"
 
-	printf "Switching to that user..."
-EOF
-
-export wwwuser
-sudo -sE -u $wwwuser <<'EOF'
-	echo "done"
-
 	printf "Cloning git repo..."
 	cd /home/
 	rm -rf "./$wwwuser/*"
@@ -88,18 +86,15 @@ sudo -sE -u $wwwuser <<'EOF'
 	rm -f "/home/$wwwuser/install.bash"
 	echo "done"
 
-	printf "Switching to root user..."
-EOF
-
-export wwwuser
-sudo -sE -u root <<'EOF'
+	printf "Changing ownership of git repo to www user..."
+	chown -R "$wwwuser:nogroup" "/home/eclipse-www-server"
 	echo "done"
 	
-	printf "Changing ownership of www server directory..."
+	printf "Changing ownership of www server directory to www user..."
 	chown -R "$wwwuser:nogroup" "/home/$wwwuser"
 	echo "done"
 
-	printf "Switching back to www user..."
+	printf "Switching to www user..."
 EOF
 
 export wwwuser
@@ -109,6 +104,9 @@ sudo -sE -u $wwwuser <<'EOF'
 	printf "Making the web server script executable by only the www user..."
 	chmod 774 "/home/$wwwuser/eclipse-www-server.lua"
 	echo "done"
+
+	printf "Making the web server root directory locked down..."
+	chmod -R 770 "/home/$wwwuser/"
 
 	printf "Switching back to root user..."
 EOF
