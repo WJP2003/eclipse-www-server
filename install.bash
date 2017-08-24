@@ -28,7 +28,7 @@ if [[ $(cut -d: -f1 /etc/passwd | grep "_www") != "" ]]; then
 fi
 
 export wwwuser
-sudo -s -u -E root <<'EOF'
+sudo -sE -u root <<'EOF'
 	printf "Running 'apt-get update'..."
 	apt-get -yqq update
 	echo "done"
@@ -74,7 +74,7 @@ sudo -s -u -E root <<'EOF'
 EOF
 
 export wwwuser
-sudo -s -u -E $wwwuser <<'EOF'
+sudo -sE -u $wwwuser <<'EOF'
 	echo "done"
 
 	printf "Cloning git repo..."
@@ -92,7 +92,7 @@ sudo -s -u -E $wwwuser <<'EOF'
 EOF
 
 export wwwuser
-sudo -s -u -E root <<'EOF'
+sudo -sE -u root <<'EOF'
 	echo "done"
 	
 	printf "Changing ownership of www server directory..."
@@ -103,7 +103,7 @@ sudo -s -u -E root <<'EOF'
 EOF
 
 export wwwuser
-sudo -s -u -E $wwwuser <<'EOF'
+sudo -sE -u $wwwuser <<'EOF'
 	echo "done"
 
 	printf "Making the web server script executable by only the www user..."
@@ -114,7 +114,7 @@ sudo -s -u -E $wwwuser <<'EOF'
 EOF
 
 export wwwuser
-sudo -s -u -E root <<'EOF'
+sudo -sE -u root <<'EOF'
 	echo "done"
 
 	printf "Creating terminal command 'eclipse-www-server'..."
