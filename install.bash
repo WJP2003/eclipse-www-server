@@ -15,7 +15,7 @@ else
 		exit 2
 	fi
 fi
-if [[ $(cut -d: -f1 /etc/passwd) | grep "_www") != "" ]]; then
+if [[ $(cut -d: -f1 /etc/passwd | grep "_www") != "" ]]; then
 	echo "Looks like you already have a user" >> /dev/stderr
 	echo "named '_www' which is the default system" >> /dev/stderr
 	echo "user for this installation. Either cancel the" >> /dev/stderr
