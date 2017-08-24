@@ -1,0 +1,4 @@
+#!/bin/bash
+
+kill $(/run/eclipse-www-server.pid)
+exit 0
