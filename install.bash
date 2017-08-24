@@ -27,6 +27,14 @@ if [[ $(cut -d: -f1 /etc/passwd | grep "_www") != "" ]]; then
 	read -s -r -p -t 32768 "Press any key to continue..." -n 1
 fi
 sudo -s -u root <<'EOF'
+	printf "Running 'apt-get update'..."
+	apt-get -yqq update
+	echo "done"
+
+	printf "Running 'apt-get upgrade'..."
+	apt-get -yqq upgrade
+	echo "done"
+
 	printf "Removing stock Lua 5.2..."
 	apt-get -yqq purge lua
 	echo "done"
@@ -35,7 +43,7 @@ sudo -s -u root <<'EOF'
 	apt-get -yqq install lua5.3
 	echo "done"
 
-	prinf "Relinking 'lua' command to Lua 5.3..."
+	printf "Relinking 'lua' command to Lua 5.3..."
 	rm -f $(which lua)
 	ln -s "$(which lua5.3)" "$(dirname $(which lua5.3))/lua"
 	echo "done"
@@ -52,8 +60,12 @@ sudo -s -u root <<'EOF'
 	luarocks install socket
 	echo "done"
 
+	printf "Installing OpenSSL (for useradd password encryption)..."
+	apt-get -yqq install openssl
+	echo "done"
+
 	printf "Creating new user for web server..."
-	useradd -m -p $(echo "$wwwuser" | openssl passwd -1 -stdin)
+	useradd -m -p $(echo "alpine" | openssl passwd -1 -stdin) "$wwwuser"
 	echo "done"
 
 	printf "Switching to that user..."
