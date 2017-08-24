@@ -101,12 +101,16 @@ export wwwuser
 sudo -sE -u $wwwuser <<'EOF'
 	echo "done"
 
+	printf "Cleaning up git repo..."
+	rm -rf "/home/eclipse-www-server"
+	echo "done"
+
 	printf "Making the web server script executable by only the www user..."
 	chmod 774 "/home/$wwwuser/eclipse-www-server.lua"
 	echo "done"
 
 	printf "Making the web server root directory locked down..."
-	chmod -R 770 "/home/$wwwuser/"
+	chmod -R 700 "/home/$wwwuser/"
 
 	printf "Switching back to root user..."
 EOF
