@@ -57,7 +57,7 @@ sudo -s -u root <<'EOF'
 	echo "done"
 
 	printf "Installing LuaSocket..."
-	luarocks install socket
+	luarocks install luasocket
 	echo "done"
 
 	printf "Installing OpenSSL (for useradd password encryption)..."
@@ -115,7 +115,7 @@ sudo -s -u root <<'EOF'
 	chmod 774 "/usr/local/bin/eclipse-www-server.kill"
 	echo "done"
 
-	prinf "Creating systemd service 'eclipse-www-server'..."
+	printf "Creating systemd service 'eclipse-www-server'..."
 	mv "/home/$wwwuser/eclipse-www-server.service" "/lib/systemd/system/eclipse-www-server.service"
 	echo "done"
 EOF
