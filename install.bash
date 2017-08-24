@@ -26,6 +26,7 @@ if [[ $(cut -d: -f1 /etc/passwd | grep "_www") != "" ]]; then
 	read -r -p "with an underscore.) New username: " wwwuser 
 	read -s -r -p "Press any key to continue..." -n 1
 fi
+
 export wwwuser
 sudo -s -u root <<'EOF'
 	printf "Running 'apt-get update'..."
