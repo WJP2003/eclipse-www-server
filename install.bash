@@ -140,5 +140,8 @@ if [[ "$wwwuser" != "_www" ]]; then
 	echo "from $(cat '/home/$wwwuser/eclipse-www-server.lua' | grep 'server_root' -m 1)"
 	echo "to $(cat '/home/$wwwuser/eclipse-www-server.lua' | grep 'server_root' -m -1 | xargs sed -i 's/_www/$wwwuser/g')."
 fi
+echo "NOTE: To edit web server files, su to $wwwuser"
+echo "and edit from there. Default password for $wwwuser"
+echo "is 'alpine', CHANGE THIS WHEN POSSIBLE!!!"
 read -s -r -p "Press any key to continue..." -n 1
 exit 0
